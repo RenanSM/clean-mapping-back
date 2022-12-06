@@ -7,6 +7,7 @@
 package com.cleanmapping.CmApp.domain.repository;
 
 import com.cleanmapping.CmApp.domain.model.Usuario;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +19,6 @@ import org.springframework.stereotype.Repository;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
         
     Usuario findById(long id);
+    
+    Optional<Usuario> findByUsername(String username);
 }

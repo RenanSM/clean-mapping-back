@@ -21,6 +21,7 @@ import javax.persistence.Id;
 * @author Equipe Clean Mapping - Kaylane e Renan
 */
 @Entity
+
 public class Usuario {
     
     @Id

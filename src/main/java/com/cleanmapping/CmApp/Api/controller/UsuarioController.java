@@ -10,9 +10,11 @@ package com.cleanmapping.CmApp.Api.controller;
 
 import com.cleanmapping.CmApp.domain.model.Usuario;
 import com.cleanmapping.CmApp.domain.repository.UsuarioRepository;
+import com.cleanmapping.CmApp.domain.security.UsuarioCreateRequest;
 import com.cleanmapping.CmApp.domain.service.UsuarioService;
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.HttpStatus;
@@ -33,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 * @author Equipe Clean Mapping - Kaylane e Renan
 */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/usuario")
 public class UsuarioController {
     @Autowired
@@ -64,6 +67,12 @@ public class UsuarioController {
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario gravar(@RequestBody Usuario usuario) {
         return usuarioRepository.save(usuario);
+    }
+    
+    @PostMapping("/request")
+    public ResponseEntity createUsuario (@RequestBody UsuarioCreateRequest usuarioCreateRequest){
+        usuarioService.createUsuario(usuarioCreateRequest);
+        return ResponseEntity.ok().build();
     }
     
     // Atualizar usuario
