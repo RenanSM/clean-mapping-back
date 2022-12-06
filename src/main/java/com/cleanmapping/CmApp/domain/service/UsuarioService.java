@@ -50,6 +50,7 @@ public class UsuarioService {
         }
         usuario.setUsername(usuarioCreateRequest.getUsername());
         usuario.setPassword(passwordEncoder.encode(usuarioCreateRequest.getPassword()));
+        usuario.setRole(usuarioCreateRequest.getRole());
         UsuarioRepository.save(usuario);
         
         

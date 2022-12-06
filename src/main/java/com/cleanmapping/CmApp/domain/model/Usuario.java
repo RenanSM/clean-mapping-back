@@ -31,6 +31,7 @@ public class Usuario {
     private String username;
     private String cpf;
     private String password;
+    private String role;
     
     @Enumerated(EnumType.STRING)
     private StatusUsuario status;
@@ -40,12 +41,13 @@ public class Usuario {
     }
 
 
-    public Usuario(long id, String name, String username, String cpf, String password, StatusUsuario status) {
+    public Usuario(long id, String name, String username, String cpf, String password,  String role, StatusUsuario status) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.cpf = cpf;
         this.password = password;
+        this.role = role;
         this.status = status;
     }
 
@@ -108,6 +110,15 @@ public class Usuario {
     public void setStatus(StatusUsuario status) {
         this.status = status;
     }
+    
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
 
 
     @Override
