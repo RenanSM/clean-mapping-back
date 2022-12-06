@@ -25,9 +25,14 @@ public class Usuario {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("position")
     private long id;
     private String name;
+    
+    @JsonProperty("description")
     private String username;
+    
+    @JsonProperty("symbol")
     private String cpf;
     private String password;
     
