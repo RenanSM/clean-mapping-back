@@ -30,6 +30,7 @@ public class Ambiente {
     
     @Column(name="numambiente")
     private int numAmbiente;
+    private String recurso;
     private String obs;
     
     @Enumerated(EnumType.STRING)
@@ -38,10 +39,11 @@ public class Ambiente {
     public Ambiente() {
     }
 
-    public Ambiente(long id, String nomeAmbiente, int numAmbiente, String obs, StatusAmbiente status) {
+    public Ambiente(long id, String nomeAmbiente, int numAmbiente, String recurso, String obs, StatusAmbiente status) {
         this.id = id;
         this.nomeAmbiente = nomeAmbiente;
         this.numAmbiente = numAmbiente;
+        this.recurso = recurso;
         this.obs = obs;
         this.status = status;
     }
@@ -70,6 +72,14 @@ public class Ambiente {
         this.numAmbiente = numAmbiente;
     }
 
+    public String getRecurso() {
+        return recurso;
+    }
+
+    public void setRecurso(String recurso) {
+        this.recurso = recurso;
+    }
+    
     public String getObs() {
         return obs;
     }
