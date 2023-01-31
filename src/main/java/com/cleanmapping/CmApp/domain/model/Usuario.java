@@ -55,7 +55,14 @@ public class Usuario{
     }
 
 
-
+    public Usuario(long id, String name, String username, String cpf, String password, StatusUsuario status) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.cpf = cpf;
+        this.password = password;
+        this.status = status;
+    }
 
 
     public long getIdUsuario() {
