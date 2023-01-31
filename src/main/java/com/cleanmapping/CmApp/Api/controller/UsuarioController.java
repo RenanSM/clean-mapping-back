@@ -7,12 +7,16 @@
 package com.cleanmapping.CmApp.Api.controller;
 
 
-
+import com.cleanmapping.CmApp.domain.model.Role;
 import com.cleanmapping.CmApp.domain.model.Usuario;
 import com.cleanmapping.CmApp.domain.repository.UsuarioRepository;
+import com.cleanmapping.CmApp.domain.service.UsuarioRoleService;
 import com.cleanmapping.CmApp.domain.service.UsuarioService;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.HttpStatus;
@@ -26,6 +30,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 
@@ -33,7 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
 * Implementa RestController de Usuario
 * @author Equipe Clean Mapping - Kaylane e Renan
 */
-@RestController
+@RestController @RequiredArgsConstructor
 @RequestMapping("/client")
 public class UsuarioController {
     @Autowired
@@ -41,8 +46,46 @@ public class UsuarioController {
     
     @Autowired
     private UsuarioService usuarioService;
+    
+    private final UsuarioRoleService usuarioRoleService;
+    
 
-
+    @GetMapping("/usuarios")
+    public ResponseEntity<List<Usuario>>getUsuario(){
+        return ResponseEntity.ok().body(usuarioRoleService.getUsuario());
+    }
+    
+    @PostMapping("/usuario/save")
+    public ResponseEntity<Usuario>saveUsuario(@RequestBody Usuario usuario){
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/client/usuario/save").toUriString());
+        return ResponseEntity.created(uri).body(usuarioRoleService.saveUsuario(usuario));
+    }
+    
+    @PostMapping("/role/save")
+    public ResponseEntity<Role>saveRole(@RequestBody Role role){
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/client/role/save").toUriString());
+        return ResponseEntity.created(uri).body(usuarioRoleService.saveRole(role));
+    }
+    
+    
+    @PostMapping("/role/addtousuario")
+    public ResponseEntity<?>addRoleToUser(@RequestBody RoleToUsuarioForm form){
+        usuarioRoleService.addRoleToUser(form.getUsername(), form.getRoleName());
+        return ResponseEntity.ok().build();
+        
+    }
+    
+    
+    @Data
+    class RoleToUsuarioForm {
+        private String username;
+        private String roleName;
+    }
+    
+    
+    
+    
+    
 
     // Lista todos usuarios
 //    @CrossOrigin(origins = "http://localhost:8080/api")

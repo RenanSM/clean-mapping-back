@@ -9,20 +9,27 @@ package com.cleanmapping.CmApp.domain.model;
 
 import com.cleanmapping.CmApp.domain.model.status.StatusUsuario;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /**
 *
 * @author Equipe Clean Mapping - Kaylane e Renan
 */
-@Entity
-public class Usuario {
+@Entity @Data
+public class Usuario{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,20 +46,16 @@ public class Usuario {
     
     @Enumerated(EnumType.STRING)
     private StatusUsuario status;
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();
 
 
     public Usuario() {
     }
 
 
-    public Usuario(long id, String name, String username, String cpf, String password, StatusUsuario status) {
-        this.id = id;
-        this.name = name;
-        this.username = username;
-        this.cpf = cpf;
-        this.password = password;
-        this.status = status;
-    }
+
 
 
     public long getIdUsuario() {
