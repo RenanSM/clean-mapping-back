@@ -16,6 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 
 /**
  *
@@ -36,12 +38,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     
     @Override
     protected void configure(HttpSecurity http) throws Exception{
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
+        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
+        http.authorizeRequests().antMatchers( "/login").permitAll();
+        http.authorizeRequests().antMatchers(GET, "/client/usuarios").hasAnyAuthority("ROLE_USER");
+        http.authorizeRequests().antMatchers(POST, "/client/usuario/save").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER");
         http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
     }
     
+    //lembrete: alterar o permitAll para authenticated, assim tudo necessitará da autenticação a não ser que seja expecificado acesso para todos.
+    //(alterar apenas quando arrumar o erro do username retornando null), video 1:28:10
     
     @Bean
     @Override
